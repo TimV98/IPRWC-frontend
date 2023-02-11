@@ -1,0 +1,43 @@
+<div class="container mt-5">
+  <div class="offset-2 ">
+    <div class="row-cols-md-1 ms-5 ">
+      <div class="ms-5 mb-5">
+        <div class="ms-5">
+          <div class="card mx-2 w-50">
+            <div class="card-header bg-primary-subtle">
+              <a routerLink="../" class="btn btn-warning">Terug</a>
+              <h1>Profielgegevens wijzigen</h1>
+            </div>
+            <form (ngSubmit)="editProfile()" [formGroup]="profileForm" *ngIf="profileForm">
+              <div class="card-body">
+                <div class="" [formGroup]="profileForm">
+                  <label class="form-label"> Voornaam:</label>
+                  <input class="form-control" formControlName="firstName">
+                  <label class="form-label">Tussenvoegsel:</label>
+                  <input class="form-control" formControlName="prefix">
+                  <label class="form-label">Achternaam:</label>
+                  <input class="form-control" formControlName="lastName">
+                </div>
+                <div class="">
+                  <label class="form-label"> Adres:</label>
+                  <input class="form-control" formControlName="street">
+                  <label class="form-label"> Huisnummer</label>
+                  <input class="form-control" formControlName="houseNumber">
+                  <label class="form-label"> Postcode:</label>
+                  <input class="form-control" formControlName="zipCode">
+                  <label class="form-label"> Plaats:</label>
+                  <input class="form-control" formControlName="place">
+                </div>
+                <div class="">
+                  <label class="form-label">Telefoonnummer:</label>
+                  <input class="form-control" formControlName="phoneNumber">
+                </div>
+                <button class="btn btn-primary mt-2 d-flex justify-content-end">Edit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

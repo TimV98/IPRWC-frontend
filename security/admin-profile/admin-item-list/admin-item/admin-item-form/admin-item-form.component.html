@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row-cols-md-1">
+    <div class="card">
+      <div class="card-header" *ngIf="this.idPresent">
+        <div class="d-flex gap-2">
+          <button class="btn btn-warning" routerLink="../../">Terug</button>
+          <h1>Editing {{product.product_name}}</h1>
+        </div>
+      </div>
+      <div class="card-header" *ngIf="!this.idPresent">
+        <div class="d-flex gap-2">
+          <button class="btn btn-warning" routerLink="../">Terug</button>
+          <h1>Adding Product</h1>
+        </div>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="productForm" (ngSubmit)="submitForm()" *ngIf="productForm">
+          <div class="input-group mb-3">
+            <label class="input-group-text">Productnaam:</label>
+            <input class="form-control" type="text" formControlName="product_name">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text">Rating:</label>
+            <input class="form-control" type="number" formControlName="product_rating">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text">Prijs:</label>
+            <input class="form-control" type="number" formControlName="price">
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text">Beschrijving:</label>
+            <textarea class="form-control" type="text" formControlName="description"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text">Image:</label>
+            <input class="form-control" type="file" formControlName="image">
+          </div>
+          <div class="d-flex justify-content-end">
+            <button *ngIf="!idPresent" class="btn btn-success ">Add</button>
+          </div>
+          <div *ngIf="idPresent" class="d-flex justify-content-end">
+            <button class="btn btn-primary ">Edit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

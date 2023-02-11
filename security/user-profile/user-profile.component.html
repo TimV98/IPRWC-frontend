@@ -1,0 +1,30 @@
+<div class="container mt-5">
+  <div class="w-75 ms-5">
+    <div class="card bg-light-subtle">
+      <h1 class="card-header bg-primary text-bg-info">Welkom bij je profiel {{user.firstName}}</h1>
+      <div class="card-body">
+        <div class="d-flex align-items-start flex-column mx-2">
+          <h3>Naam:</h3>
+          <div class=" d-flex">
+            <p class="fs-3">{{user.firstName}}</p>
+            <p class="fs-3 mx-1" *ngIf="user.prefix != null">{{user.prefix}}</p>
+            <p class="fs-3 mx-1">{{user.lastName}}</p>
+          </div>
+          <h3>Straat:</h3>
+          <div class="d-flex">
+            <p class="fs-3">{{user.street}} {{user.houseNumber}}, {{user.zipCode}} </p>
+          </div>
+          <h3>Email:</h3>
+          <div class="d-flex">
+            <p class="fs-3">{{user.email}}</p>
+          </div>
+          <h3>Telefoonnummer:</h3>
+          <div class="d-flex">
+            <p class="fs-3">+31{{user.phoneNumber}}</p>
+          </div>
+          <a class="btn btn-primary" routerLink="edit"> Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
