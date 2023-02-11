@@ -11,16 +11,16 @@ import {Router} from "@angular/router";
 })
 export class UserProfileEditComponent implements OnInit {
 
-  user: User;
+  user: User = this.userService.user;
 
   profileForm: FormGroup
 
-  constructor(private userService: UserService, private router:Router) {
+  constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
     this.userService.getUserProfile().subscribe((data: User) => {
-        this.user = data
+        this.user = this.userService.user = data;
         this.profileForm = new FormGroup({
           firstName: new FormControl(this.user.firstName),
           prefix: new FormControl(this.user.prefix),

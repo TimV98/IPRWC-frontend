@@ -30,6 +30,7 @@ export class NavigationComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.auth.userIsLoggedIn();
+    this.auth.sendAdmin(false);
   }
 
   ngOnInit() {

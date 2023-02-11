@@ -3,6 +3,7 @@ import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {LoginCredentials} from "../security/LoginCredentials";
 import {User} from "../models/User";
+import {SingupRequest} from "../security/SingupRequest";
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -26,8 +27,8 @@ export class AuthService {
     return this.isLoggedInSubject.asObservable();
   }
 
-  sendAdmin(value: boolean){
-    if (localStorage.getItem('role') == 'ROLE_ADMIN'){
+  sendAdmin(value: boolean) {
+    if (localStorage.getItem('role') == 'ROLE_ADMIN') {
       this.isAdmin.next(true)
     } else {
       this.isAdmin.next(false);
@@ -35,25 +36,21 @@ export class AuthService {
     }
   }
 
-  getAdmin(){
+  getAdmin() {
     return this.isAdmin.asObservable()
   }
 
-  loginUser(email: string, password: string) {
+  loginUser(loginCredentials: LoginCredentials) {
     return this.http.post<any>(
       AUTH_API + 'login',
-      {email, password},
+      loginCredentials,
     )
   }
 
-  registerUser(username: string, email: string, password: string): Observable<any> {
+  registerUser(signUpReq: SingupRequest) {
     return this.http.post(
-      AUTH_API + 'signup',
-      {
-        username,
-        email,
-        password,
-      },
+      AUTH_API + 'register',
+      signUpReq,
     );
   }
 

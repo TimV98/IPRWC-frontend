@@ -16,7 +16,7 @@
       <div class="card-body">
         <form [formGroup]="productForm" (ngSubmit)="submitForm()" *ngIf="productForm">
           <div class="input-group mb-3">
-            <label class="input-group-text">Productnaam:</label>
+            <label class="input-group-text">Productname:</label>
             <input class="form-control" type="text" formControlName="product_name">
           </div>
           <div class="input-group mb-3">
@@ -24,11 +24,11 @@
             <input class="form-control" type="number" formControlName="product_rating">
           </div>
           <div class="input-group mb-3">
-            <label class="input-group-text">Prijs:</label>
+            <label class="input-group-text">Price:</label>
             <input class="form-control" type="number" formControlName="price">
           </div>
           <div class="input-group mb-3">
-            <label class="input-group-text">Beschrijving:</label>
+            <label class="input-group-text">Description:</label>
             <textarea class="form-control" type="text" formControlName="description"></textarea>
           </div>
           <div class="input-group mb-3">
@@ -39,7 +39,7 @@
             <button *ngIf="!idPresent" class="btn btn-success ">Add</button>
           </div>
           <div *ngIf="idPresent" class="d-flex justify-content-end">
-            <button class="btn btn-primary ">Edit</button>
+            <button class="btn btn-primary">Edit</button>
           </div>
         </form>
       </div>
