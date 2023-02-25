@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from "../../../../../products/Product.model";
+import {Product} from "../../../../../models/Product.model";
 import {ProductService} from "../../../../../services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -15,6 +15,7 @@ export class AdminItemFormComponent implements OnInit {
   idPresent: boolean = false;
   id: number;
   productForm: FormGroup
+  submitted: boolean;
 
   constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router) {
 
@@ -28,10 +29,10 @@ export class AdminItemFormComponent implements OnInit {
 
         if (this.idPresent) {
           this.productForm = new FormGroup({
-            product_name: new FormControl(this.product.product_name),
-            price: new FormControl(this.product.price),
-            product_rating: new FormControl(this.product.product_rating),
-            description: new FormControl(this.product.description),
+            product_name: new FormControl(this.product.product_name, [Validators.required, Validators.nullValidator]),
+            price: new FormControl(this.product.price, [Validators.required, Validators.nullValidator]),
+            product_rating: new FormControl(this.product.product_rating, [Validators.required, Validators.nullValidator]),
+            description: new FormControl(this.product.description, [Validators.required, Validators.nullValidator]),
             image: new FormControl(this.product.image)
           })
           this.productForm.value.product_name = data.product_name;
@@ -63,6 +64,7 @@ export class AdminItemFormComponent implements OnInit {
   }
 
   submitForm() {
+    this.submitted = true;
     this.product.product_name = this.productForm.value.product_name;
     this.product.price = this.productForm.value.price;
     this.product.product_rating = this.productForm.value.product_rating;

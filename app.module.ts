@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
+import {AppRoutingModule} from './routing/app-routing.module';
 import {AppComponent} from './app.component';
-import {RegisterComponent} from './security/register/register.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {ShoppingCartComponent} from './shopping-cart/shopping-cart.component';
 import {ShoppingCartItemComponent} from './shopping-cart/shopping-cart-item/shopping-cart-item.component';

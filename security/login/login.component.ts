@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {LoginCredentials} from "../LoginCredentials";
+import {LoginCredentials} from "../../models/LoginCredentials";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,11 @@ import {LoginCredentials} from "../LoginCredentials";
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup = new FormGroup({})
+  submitted: boolean;
+  loginForm: FormGroup;
   private loginCredentials: LoginCredentials = new LoginCredentials();
+  showErrorMessage: boolean;
+  errorMessage: string;
 
   constructor(private authService: AuthService, private router: Router) {
 
@@ -20,25 +24,37 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      'email': new FormControl(null),
-      'password': new FormControl(null)
+      'email': new FormControl(null, [Validators.required]),
+      'password': new FormControl(null, [Validators.required])
     })
-    this.authService.getStatus();
   }
 
 
   login() {
+    this.submitted = true;
     this.loginCredentials.email = this.loginForm?.value.email;
     this.loginCredentials.password = this.loginForm?.value.password
-    this.authService.loginUser(this.loginCredentials).subscribe((res: any) => {
-      localStorage.setItem('authToken', res.accessToken)
-      localStorage.setItem('role', res.roles[0])
-      if (this.authService.getStatus())
-        this.authService.sendStatus(true)
-      if (localStorage.getItem('role') == 'ROLE_ADMIN') {
-        this.authService.sendAdmin(true);
+    this.authService.loginUser(this.loginCredentials).subscribe({
+      next: res => {
+        localStorage.setItem('authToken', res.accessToken)
+        localStorage.setItem('role', res.roles[0])
+        if (this.authService.getLoginStatus()) {
+          this.authService.sendLoginStatus(true)
+        }
+        if (localStorage.getItem('role') == 'ROLE_ADMIN') {
+          this.authService.sendAdmin(true);
+        }
+        this.router.navigate(['/profile'])
+      }, error: (err: HttpErrorResponse) => {
+        if(err.status === 401) {
+          this.loginForm.controls['email'].setErrors({'invalid': true})
+          this.loginForm.controls['password'].setErrors({'invalid': true})
+
+          this.showErrorMessage = true;
+          this.errorMessage = "Wrong Credentials!";
+        }
       }
-      this.router.navigate(['/profile'])
+
     })
   }
 

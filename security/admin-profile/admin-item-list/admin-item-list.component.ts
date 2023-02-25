@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserService} from "../../../services/user.service";
 import {User} from "../../../models/User";
 import {ProductService} from "../../../services/product.service";
-import {Product} from "../../../products/Product.model";
+import {Product} from "../../../models/Product.model";
 
 @Component({
   selector: 'app-admin-item-list',

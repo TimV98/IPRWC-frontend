@@ -20,7 +20,7 @@ export class NavigationComponent implements OnInit {
   user: User = this.userService.user;
 
   userLoggedIn() {
-    return this.auth.getStatus().subscribe(value => this.isLoggedIn = value)
+    return this.auth.getLoginStatus().subscribe(value => this.isLoggedIn = value)
   }
 
   checkIsAdmin(){

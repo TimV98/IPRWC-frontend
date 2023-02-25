@@ -1,22 +1,30 @@
-<div class="container-lg">
-  <div class="col-md-6">
+<div class="container">
+  <div class="col-md-6 col-12">
     <div class="position-relative top-0 start-50 mt-5">
-      <div class="col-lg-10">
+      <div class="col-md-10">
         <div class="card">
+          <div class="card-header">
+            <h1>Login</h1>
+          </div>
           <form (ngSubmit)="login()" [formGroup]="loginForm">
-            <div class="card-header">
-              <h1>Login</h1>
-            </div>
             <div class="card-body">
               <div class="input-group mb-1">
-                <label for="email" class="input-group-text">Username:</label>
-                <input type="text" id="email" class="form-control" formControlName="email" name="email" required>
+                <label class="input-group-text col-3">Username</label>
+                <input type="email" class="form-control"
+                       [ngClass]="{'is-invalid': submitted && loginForm.controls['email'].errors}"
+                       formControlName="email"
+                       name="email" required>
               </div>
               <div class="input-group">
-                <label for="password" class="input-group-text">Password</label>
-                <input type="password" id="password" class="form-control" formControlName="password"
-                       name="password"
+                <label class="input-group-text col-3"> Password</label>
+                <input type="password" class="form-control" formControlName="password"
+                       name="password" minlength="6"
+                       [ngClass]="{'is-invalid': submitted && loginForm.controls['password'].errors}"
                        required>
+                <div *ngIf="this.showErrorMessage" class="invalid-feedback ps-5 ms-5 mt-1"
+                     [ngClass]="{'is-invalid': submitted && loginForm.controls['password'].errors}">
+                  {{errorMessage}}
+                </div>
               </div>
               <div class="d-flex flex-row">
                 <p class="form-text">Don't have an account?</p>
@@ -24,10 +32,11 @@
               </div>
             </div>
             <div class="d-flex mb-2 me-2 justify-content-end">
-              <button class="btn btn-primary w-25">Login</button>
+              <button class="btn btn-primary w-25" [disabled]="!loginForm.dirty || loginForm.invalid">Login</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+</div>

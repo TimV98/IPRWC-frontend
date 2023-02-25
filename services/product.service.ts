@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {Product} from "../products/Product.model";
+import {Product} from "../models/Product.model";
 import {HttpClient} from "@angular/common/http";
 
 const PRODUCT_API: string = "http://localhost:8080/api/products/";

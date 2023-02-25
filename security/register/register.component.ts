@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {SingupRequest} from "../SingupRequest";
+import {SingupRequest} from "../../models/SingupRequest";
 import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   signupReq: SingupRequest = new SingupRequest();
 
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -44,10 +45,9 @@ export class RegisterComponent implements OnInit {
     this.signupReq.zipCode = this.registerForm.value.zipCode;
     this.signupReq.place = this.registerForm.value.place
     this.signupReq.phoneNumber = this.registerForm.value.phoneNumber;
-    console.log(this.signupReq)
-    this.auth.registerUser(this.signupReq).subscribe((data:any) =>
-      console.log(data)
-    )
+    this.auth.registerUser(this.signupReq).subscribe(data => {
+      this.router.navigate(['/login'])
+    })
 
   }
 }
