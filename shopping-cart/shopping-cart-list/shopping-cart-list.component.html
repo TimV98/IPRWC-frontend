@@ -1,3 +1,7 @@
-<ul class="list-group">
-  <app-shopping-cart-item></app-shopping-cart-item>
-</ul>
+<div class="container">
+  <div class="list-group">
+    <div class="list-group-item" *ngFor="let item of shoppingCart; let i = index">
+      <app-shopping-cart-item (itemEmitter)="checkQuantity($event, i)" [item]="item"></app-shopping-cart-item>
+    </div>
+  </div>
+</div>

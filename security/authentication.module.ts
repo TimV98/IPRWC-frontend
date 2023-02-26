@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {HttpRequestInterceptor} from "../interceptors/HttpRequestInterceptor";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuthInterceptor} from "../interceptors/AuthInterceptor";
@@ -43,7 +42,7 @@ import {
     AuthenticationRoutingModule
   ],
 
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true}, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}]
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}]
 })
 export class AuthenticationModule {
 }
