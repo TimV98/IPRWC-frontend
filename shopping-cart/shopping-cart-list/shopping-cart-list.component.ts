@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ShoppingCartItem} from "../../models/ShoppingCartItem";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
 
@@ -16,15 +16,10 @@ export class ShoppingCartListComponent {
   constructor(private shoppingCartService: ShoppingCartService) {
   }
 
-  checkQuantity(item: ShoppingCartItem, index: number) {
-    console.log(item.quantity)
-    this.shoppingCart.at(index)!.price! = this.shoppingCart.at(index)!.price! * this.shoppingCart.at(index)!.quantity!;
-    if (this.shoppingCart.at(index)!.quantity === 1) {
-      this.shoppingCart.at(index)!.price! = this.shoppingCart.at(index)!.price! / 2;
-    }
+  checkQuantity(index: number) {
     if (this.shoppingCart.at(index)!.quantity === 0) {
       this.shoppingCart.splice(index, 1)
+      this.shoppingCartService.sendCartStatus(true);
     }
-
   }
 }

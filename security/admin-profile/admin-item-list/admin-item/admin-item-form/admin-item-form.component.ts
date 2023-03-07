@@ -3,6 +3,8 @@ import {Product} from "../../../../../models/Product.model";
 import {ProductService} from "../../../../../services/product.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ToastrService} from "ngx-toastr";
+import {HttpSentEvent} from "@angular/common/http";
 
 @Component({
   selector: 'app-admin-item-form',
@@ -17,7 +19,10 @@ export class AdminItemFormComponent implements OnInit {
   productForm: FormGroup
   submitted: boolean;
 
-  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router) {
+  constructor(private productService: ProductService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private toastr: ToastrService) {
 
   }
 
@@ -71,13 +76,25 @@ export class AdminItemFormComponent implements OnInit {
     this.product.description = this.productForm.value.description;
     this.product.image = this.productForm.value.image;
     if (this.idPresent) {
-      this.productService.editProduct(this.id, this.product).subscribe(() => {
+      this.productService.editProduct(this.id, this.product).subscribe({next: (product) => {
+        this.toastr.success("Your product has been added!", "Product added")
         this.router.navigate(['/admin/products'])
-      });
+      },
+        error: (e) => {
+        if(e.status == 500){
+          this.toastr.error("Something went wrong!", "Error")
+        }
+        }});
     } else {
-      this.productService.addProduct(this.product).subscribe(() => {
+      this.productService.addProduct(this.product).subscribe({next:() => {
+        this.toastr.success("Your product has been added!", "Product added")
         this.router.navigate(['/admin/products'])
-      })
+      },
+      error: (err) => {
+      if (err.status == 500){
+        this.toastr.error("Something went wrong!", "Error")
+      }}
+      });
     }
   }
 }

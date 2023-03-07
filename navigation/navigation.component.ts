@@ -24,20 +24,18 @@ export class NavigationComponent implements OnInit {
   }
 
   checkIsAdmin(){
-    this.auth.getAdmin().subscribe(value => this.isAdmin = value)
+    return this.auth.getAdmin().subscribe(value => this.isAdmin = value)
   }
 
   logout() {
     this.auth.logout();
     this.auth.userIsLoggedIn();
-    this.auth.sendAdmin(false);
   }
 
   ngOnInit() {
     this.userLoggedIn()
     this.checkIsAdmin()
   }
-
 }
 
 

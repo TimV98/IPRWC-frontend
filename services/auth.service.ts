@@ -3,6 +3,8 @@ import {BehaviorSubject, catchError, throwError} from "rxjs";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {LoginCredentials} from "../models/LoginCredentials";
 import {SingupRequest} from "../models/SingupRequest";
+import * as CryptoJS from 'crypto-js';
+import {Router} from "@angular/router";
 
 const AUTH_API = 'http://localhost:8080/api/auth/';
 
@@ -17,7 +19,11 @@ export class AuthService {
 
   failedLogin: boolean;
 
-  constructor(private http: HttpClient) {
+  private _role: string;
+
+  key: string = "secretKey";
+
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   loginUser(loginCredentials: LoginCredentials) {
@@ -37,6 +43,7 @@ export class AuthService {
   logout() {
     this.sendLoginStatus(false)
     localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
   userIsLoggedIn() {
@@ -57,11 +64,11 @@ export class AuthService {
   }
 
 
-  sendAdmin(value: boolean) {
-    if (localStorage.getItem('role') == 'ROLE_ADMIN') {
-      this.isAdmin.next(value)
+  sendAdmin() {
+    if (this.decryptRole(localStorage.getItem('role')!)) {
+      this.isAdmin.next(true)
     } else {
-      this.isAdmin.next(value);
+      this.isAdmin.next(false);
 
     }
   }
@@ -70,4 +77,19 @@ export class AuthService {
     return this.isAdmin.asObservable()
   }
 
+  encryptRole(text: string) {
+    return CryptoJS.AES.encrypt(text, this.key).toString()
+  }
+
+  decryptRole(text: string) {
+      return CryptoJS.AES.decrypt(text, this.key).toString(CryptoJS.enc.Utf8)
+  }
+
+  get role(): string {
+    return this._role;
+  }
+
+  set role(value: string) {
+    this._role = value;
+  }
 }

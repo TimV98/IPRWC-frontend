@@ -17,8 +17,7 @@ export class AdminItemListComponent implements OnInit {
   ngOnInit() {
     this.productService.getAllProducts().subscribe(data => {
       this.products = this.productService.products = data;
-      console.log(this.products)
-    })
+    });
   }
 
   constructor(private productService: ProductService) {

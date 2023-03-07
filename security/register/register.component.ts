@@ -3,6 +3,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {SingupRequest} from "../../models/SingupRequest";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   signupReq: SingupRequest = new SingupRequest();
 
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -45,9 +46,16 @@ export class RegisterComponent implements OnInit {
     this.signupReq.zipCode = this.registerForm.value.zipCode;
     this.signupReq.place = this.registerForm.value.place
     this.signupReq.phoneNumber = this.registerForm.value.phoneNumber;
-    this.auth.registerUser(this.signupReq).subscribe(data => {
-      this.router.navigate(['/login'])
-    })
+    this.auth.registerUser(this.signupReq).subscribe({
+      next: () => {
+        this.toastr.success("User has been edited!", "User Edited!")
+        this.router.navigate(['/login'])
+      }, error: (err) => {
+        if (err.status == 500) {
+          this.toastr.error("Something went wrong!", "Error")
+        }
+      }
+    });
 
   }
 }

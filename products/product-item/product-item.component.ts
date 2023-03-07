@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Product} from "../../models/Product.model";
 import {ShoppingCartService} from "../../services/shopping-cart.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-product-item',
@@ -11,10 +12,12 @@ export class ProductItemComponent {
 
   @Input() product: Product;
 
-  constructor(private shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService, private toastr: ToastrService) {
+  }
 
-  convertProductToCartItem(){
+  convertProductToCartItem() {
     this.shoppingCartService.convertProductToCartItem(this.product)
+    this.toastr.success("Product added to shopping cart!", "Product added", {timeOut: 1000})
   }
 
 }

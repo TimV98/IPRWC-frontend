@@ -17,12 +17,14 @@ export class LoginComponent implements OnInit {
   private loginCredentials: LoginCredentials = new LoginCredentials();
   showErrorMessage: boolean;
   errorMessage: string;
+  role: string = this.authService.role;
 
   constructor(private authService: AuthService, private router: Router) {
 
   }
 
   ngOnInit(): void {
+    localStorage.clear();
     this.loginForm = new FormGroup({
       'email': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, [Validators.required])
@@ -36,17 +38,21 @@ export class LoginComponent implements OnInit {
     this.loginCredentials.password = this.loginForm?.value.password
     this.authService.loginUser(this.loginCredentials).subscribe({
       next: res => {
-        localStorage.setItem('authToken', res.accessToken)
-        localStorage.setItem('role', res.roles[0])
+        this.authService.role = res.roles[0];
+        this.role = this.authService.encryptRole(res.roles[0]);
+        localStorage.setItem('token', res.accessToken)
+        localStorage.setItem('role', this.role)
         if (this.authService.getLoginStatus()) {
           this.authService.sendLoginStatus(true)
         }
-        if (localStorage.getItem('role') == 'ROLE_ADMIN') {
-          this.authService.sendAdmin(true);
+        if (localStorage.getItem('role')) {
+          if (this.authService.decryptRole(this.role) === "ROLE_ADMIN") {
+            this.authService.sendAdmin();
+          }
         }
         this.router.navigate(['/profile'])
       }, error: (err: HttpErrorResponse) => {
-        if(err.status === 401) {
+        if (err.status === 401) {
           this.loginForm.controls['email'].setErrors({'invalid': true})
           this.loginForm.controls['password'].setErrors({'invalid': true})
 
