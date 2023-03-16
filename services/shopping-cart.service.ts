@@ -7,7 +7,7 @@ import {UserService} from "./user.service";
 import {BehaviorSubject} from "rxjs";
 
 
-const ORDER_API: string = "http://localhost:8080/api/order/";
+const ORDER_API: string = "http://localhost:8080/api/orders/";
 
 @Injectable({
   providedIn: 'root'

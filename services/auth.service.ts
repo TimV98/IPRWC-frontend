@@ -42,6 +42,7 @@ export class AuthService {
 
   logout() {
     this.sendLoginStatus(false)
+    this.sendAdmin();
     localStorage.clear();
     this.router.navigate(['/login']);
   }
@@ -65,11 +66,10 @@ export class AuthService {
 
 
   sendAdmin() {
-    if (this.decryptRole(localStorage.getItem('role')!)) {
-      this.isAdmin.next(true)
+    if (this.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN") {
+      this.isAdmin.next(true);
     } else {
-      this.isAdmin.next(false);
-
+      this.isAdmin.next(false)
     }
   }
 
@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   decryptRole(text: string) {
-      return CryptoJS.AES.decrypt(text, this.key).toString(CryptoJS.enc.Utf8)
+    return CryptoJS.AES.decrypt(text, this.key).toString(CryptoJS.enc.Utf8)
   }
 
   get role(): string {

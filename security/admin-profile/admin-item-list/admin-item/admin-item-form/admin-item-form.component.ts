@@ -38,13 +38,11 @@ export class AdminItemFormComponent implements OnInit {
             price: new FormControl(this.product.price, [Validators.required, Validators.nullValidator]),
             product_rating: new FormControl(this.product.product_rating, [Validators.required, Validators.nullValidator]),
             description: new FormControl(this.product.description, [Validators.required, Validators.nullValidator]),
-            image: new FormControl(this.product.image)
           })
           this.productForm.value.product_name = data.product_name;
           this.productForm.value.price = data.price;
           this.productForm.value.product_rating = data.product_rating;
           this.productForm.value.description = data.description;
-          this.productForm.value.image = data.image;
         }
       })
     } else {
@@ -74,7 +72,6 @@ export class AdminItemFormComponent implements OnInit {
     this.product.price = this.productForm.value.price;
     this.product.product_rating = this.productForm.value.product_rating;
     this.product.description = this.productForm.value.description;
-    this.product.image = this.productForm.value.image;
     if (this.idPresent) {
       this.productService.editProduct(this.id, this.product).subscribe({next: (product) => {
         this.toastr.success("Your product has been added!", "Product added")

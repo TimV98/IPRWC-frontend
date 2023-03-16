@@ -36,10 +36,6 @@
             <textarea class="form-control" type="text" formControlName="description"
                       [ngClass]="{'is-invalid': submitted && productForm.controls['description'].errors}"></textarea>
           </div>
-          <div class="input-group mb-3">
-            <label class="input-group-text col-2">Image</label>
-            <input class="form-control" type="file" formControlName="image">
-          </div>
           <div class="d-flex justify-content-end">
             <button *ngIf="!idPresent" class="btn btn-success ">Add</button>
           </div>

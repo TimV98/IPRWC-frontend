@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     this.signupReq.phoneNumber = this.registerForm.value.phoneNumber;
     this.auth.registerUser(this.signupReq).subscribe({
       next: () => {
-        this.toastr.success("User has been edited!", "User Edited!")
+        this.toastr.success("Registrated!", "User Registered!")
         this.router.navigate(['/login'])
       }, error: (err) => {
         if (err.status == 500) {
