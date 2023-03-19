@@ -26,8 +26,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     localStorage.clear();
     this.loginForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required]),
-      'password': new FormControl(null, [Validators.required])
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'password': new FormControl(null, [Validators.required, Validators.minLength(6)])
     })
   }
 
@@ -53,8 +53,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/profile'])
       }, error: (err: HttpErrorResponse) => {
         if (err.status === 401) {
-          this.loginForm.controls['email'].setErrors({'invalid': true})
-          this.loginForm.controls['password'].setErrors({'invalid': true})
+          this.loginForm.controls['password'].setErrors({'invalid': true},)
 
           this.showErrorMessage = true;
           this.errorMessage = "Wrong Credentials!";

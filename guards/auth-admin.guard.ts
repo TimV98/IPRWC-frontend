@@ -23,13 +23,9 @@ export class AuthAdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const token = localStorage.getItem('token')
 
-    if (token) {
-      console.log(this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN")
-
-      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token) {
+    if (token)
+      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token)
         return true
-      }
-    }
 
     this.auth.sendLoginStatus(false)
     this.auth.sendAdmin()
@@ -42,12 +38,10 @@ export class AuthAdminGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const token = localStorage.getItem('token')
 
-    if (token) {
-
-      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token) {
+    if (token)
+      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" && token)
         return true
-      }
-    }
+
     this.auth.sendAdmin()
     return false;
   }

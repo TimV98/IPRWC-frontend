@@ -19,10 +19,14 @@ import {
 import {
   AdminItemFormComponent
 } from './admin-profile/admin-item-list/admin-item/admin-item-form/admin-item-form.component';
-import { OrderOverviewComponent } from './user-profile/order-overview/order-overview.component';
-import { OrderListComponent } from './user-profile/order-overview/order-list/order-list.component';
-import { OrderListItemComponent } from './user-profile/order-overview/order-list/order-list-item/order-list-item.component';
-import { OrderDetailsComponent } from './user-profile/order-overview/order-list/order-list-item/order-details/order-details.component';
+import {OrderOverviewComponent} from './user-profile/order-overview/order-overview.component';
+import {OrderListComponent} from './user-profile/order-overview/order-list/order-list.component';
+import {
+  OrderListItemComponent
+} from './user-profile/order-overview/order-list/order-list-item/order-list-item.component';
+import {
+  OrderDetailsComponent
+} from './user-profile/order-overview/order-list/order-list-item/order-details/order-details.component';
 
 
 @NgModule({
@@ -50,7 +54,7 @@ import { OrderDetailsComponent } from './user-profile/order-overview/order-list/
     AuthenticationRoutingModule
   ],
 
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}]
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},]
 })
 export class AuthenticationModule {
 }
