@@ -55,8 +55,14 @@ export class UserProfileEditComponent implements OnInit {
     this.user.place = this.profileForm.value.place;
     this.user.zipCode = this.profileForm.value.zipCode;
     this.user.phoneNumber = this.profileForm.value.phoneNumber;
-    this.userService.editUser(this.user).subscribe();
-    this.toastr.success("Your profile has been edited", "Profile edited")
-    this.router.navigate(['/profile'])
+    this.userService.editUser(this.user).subscribe(()=>{
+      this.toastr.success("Your profile has been edited", "Profile edited")
+      this.router.navigate(['/profile'])
+    },(error)=>{
+      if (error.status == 400 || error.status == 500 ){
+        this.toastr.error("Something went wrong!","Error")
+      }
+    });
+
   }
 }

@@ -15,7 +15,6 @@ export class AuthUserGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const token = localStorage.getItem('token');
     if (token)
-      if (this.auth.decryptRole(localStorage.getItem('role')!) === "ROLE_ADMIN" || "ROLE_USER" && localStorage.getItem('token'))
         return true;
 
     this.router.navigate(['/login']);

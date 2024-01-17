@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   private loginCredentials: LoginCredentials = new LoginCredentials();
   showErrorMessage: boolean;
   errorMessage: string;
-  role: string = this.authService.role;
+  roles: string[] = this.authService.roles;
 
   constructor(private authService: AuthService, private router: Router) {
 
@@ -37,19 +37,21 @@ export class LoginComponent implements OnInit {
     this.loginCredentials.email = this.loginForm?.value.email;
     this.loginCredentials.password = this.loginForm?.value.password
     this.authService.loginUser(this.loginCredentials).subscribe({
-      next: res => {
-        this.authService.role = res.roles[0];
-        this.role = this.authService.encryptRole(res.roles[0]);
-        localStorage.setItem('token', res.accessToken)
-        localStorage.setItem('role', this.role)
+      next: data => {
+        const token: { sub: string,
+          iat: number,
+          exp: number,
+          roles: string[] } = this.authService.parseToken(data.token);
+        this.authService.roles = token.roles;
+        localStorage.setItem('token', data.token)
         if (this.authService.getLoginStatus()) {
           this.authService.sendLoginStatus(true)
-        }
-        if (localStorage.getItem('role')) {
-          if (this.authService.decryptRole(this.role) === "ROLE_ADMIN") {
-            this.authService.sendAdmin();
+          const adminRole = token.roles.find(role => role === "ROLE_ADMIN")
+          if (adminRole){
+            this.authService.isAdmin.next(true);
           }
         }
+
         this.router.navigate(['/profile'])
       }, error: (err: HttpErrorResponse) => {
         if (err.status === 401) {

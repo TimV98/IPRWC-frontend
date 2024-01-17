@@ -18,23 +18,23 @@
           <div class="input-group mb-3">
             <label class="input-group-text col-2">Product name</label>
             <input class="form-control" type="text" formControlName="product_name"
-                   [ngClass]="{'is-invalid': productForm.controls['product_name'].invalid}">
+                   [ngClass]="{'is-invalid': productForm.controls['product_name'].invalid && productForm.controls['product_name'].touched}">
             <div *ngIf="productForm.controls['product_name'].errors?.['required']" class="invalid-feedback">
               <p>Product name can't be empty</p>
             </div>
           </div>
           <div class="input-group mb-3">
-            <label class="input-group-text col-2">Rating</label>
-            <input class="form-control" type="number" formControlName="product_rating"
-                   [ngClass]="{'is-invalid': productForm.controls['product_rating'].invalid}">
-            <div *ngIf="productForm.controls['product_rating'].errors?.['required']" class="invalid-feedback">
-              <p>Rating can't be empty</p>
+            <label class="input-group-text col-2">Genre</label>
+            <input class="form-control" type="text" formControlName="genre"
+                   [ngClass]="{'is-invalid': productForm.controls['genre'].invalid && productForm.controls['genre'].touched}">
+            <div *ngIf="productForm.controls['genre'].errors?.['required']" class="invalid-feedback">
+              <p>Genre can't be empty</p>
             </div>
           </div>
           <div class="input-group mb-3">
             <label class="input-group-text col-2">Price</label>
             <input class="form-control" type="number" formControlName="price"
-                   [ngClass]="{'is-invalid': productForm.controls['price'].invalid}">
+                   [ngClass]="{'is-invalid': productForm.controls['price'].invalid && productForm.controls['price'].touched}">
             <div *ngIf="productForm.controls['price'].errors?.['required']" class="invalid-feedback">
               <p>Price can't be empty</p>
             </div>
@@ -43,8 +43,18 @@
             <label class="input-group-text col-2">Description</label>
             <textarea class="form-control" type="text" formControlName="description"></textarea>
           </div>
+          <div class="input-group mb-3">
+            <label class="input-group-text col-2">Image</label>
+            <input class="form-control" type="file" formControlName="image" (change)="onFileChange($event)"
+                   [ngClass]="{'is-invalid': productForm.controls['image'].invalid && productForm.controls['image'].touched}">
+            <div>
+              <div *ngIf="productForm.controls['image'].errors?.['extension']" class="invalid-feedback">
+                <p>File isn't an image.</p>
+              </div>
+            </div>
+          </div>
           <div class="d-flex justify-content-end">
-            <button *ngIf="!idPresent" class="btn btn-success" [disabled]="productForm.invalid">Add</button>
+            <button *ngIf="!idPresent" class="btn btn-success" [disabled]="productForm.invalid ">Add</button>
           </div>
           <div *ngIf="idPresent" class="d-flex justify-content-end">
             <button class="btn btn-primary" [disabled]="productForm.invalid">Edit</button>

@@ -27,6 +27,7 @@ import {
 import {
   OrderDetailsComponent
 } from './user-profile/order-overview/order-list/order-list-item/order-details/order-details.component';
+import {RxReactiveFormsModule} from "@rxweb/reactive-form-validators";
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import {
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
+    RxReactiveFormsModule,
     AuthenticationRoutingModule
   ],
 
